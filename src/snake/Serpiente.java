@@ -2,7 +2,6 @@ package snake;
 
 import java.awt.Color;
 import java.awt.Graphics;
-import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 
@@ -20,6 +19,7 @@ public final class Serpiente extends Entidad {
 
     public Serpiente() {
         reiniciar();
+        color = Color.GREEN.darker();
     }
 
     public void reiniciar() {
@@ -46,11 +46,9 @@ public final class Serpiente extends Entidad {
         this.mueveCuerpo();
     }
 
+    @Override
     public void paint(Graphics g) {
-        Graphics2D g2d = (Graphics2D) g;
-        g2d.setColor(Color.GREEN.darker());
-        g2d.fillRect(x + 1, y + 1, TAM_ENTIDAD, TAM_ENTIDAD);
-
+        super.paint(g);
         for (Cuerpo c : cuerpo) {
             c.paint(g);
         }
