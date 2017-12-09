@@ -9,8 +9,9 @@ public final class Serpiente extends Entidad {
 
     private int xAnterior;
     private int yAnterior;
-    private enum dir{
-        ARRIBA,IZQUIERDA,ABAJO,DERECHA;
+
+    private enum dir {
+        ARRIBA, IZQUIERDA, ABAJO, DERECHA;
     }
     private dir direccion = dir.DERECHA;
     private dir direccionPrevia;
@@ -43,7 +44,11 @@ public final class Serpiente extends Entidad {
         if (direccion == dir.IZQUIERDA) {
             x += -TAM_CELDA;
         }
-        this.mueveCuerpo();
+
+        if (cuerpo.size() > 0) {
+            this.mueveCuerpo();
+        }
+
     }
 
     @Override
@@ -90,21 +95,17 @@ public final class Serpiente extends Entidad {
     }
 
     private void mueveCuerpo() {
-        if (cuerpo.size() > 0) {
-            Cuerpo c = cuerpo.get(0);
-            c.setPosicion(xAnterior, yAnterior);
-        }
-        avanzaArrayCuerpo();
-    }
-
-    private void avanzaArrayCuerpo() {
-        for (int i = 1; i < cuerpo.size(); i++) {
+        for (int i = 0; i < cuerpo.size(); i++) {
             Cuerpo c = cuerpo.get(i);
-            Cuerpo cAnterior = cuerpo.get(i - 1);
-            c.setPosicion(cAnterior.getxAnterior(),cAnterior.getyAnterior());
+            if (i == 0) {
+                c.setPosicion(xAnterior, yAnterior);
+            } else {
+                Cuerpo cAnterior = cuerpo.get(i - 1);
+                c.setPosicion(cAnterior.getxAnterior(), cAnterior.getyAnterior());
+            }
         }
         for (Cuerpo c : cuerpo) {
-            c.mueve();
+           c.mueve();
         }
     }
 

@@ -16,7 +16,7 @@ public class Cuerpo extends Entidad implements Constantes{
     public void mueve() {
         xAnterior = x;
         yAnterior = y;
-    }
+}
 
     public int getxAnterior() {
         return xAnterior;

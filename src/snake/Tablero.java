@@ -37,57 +37,57 @@ public class Tablero extends JPanel implements Constantes {
 
         while (true) {
             tablero.repaint();
-            tablero.mueve();
+            tablero.actualizar();
             Thread.sleep(200);
         }
     }
 
-    private void mueve() {
+    private void actualizar() {
         serpiente.mueve();
-        this.compruebaColisionManzana();
-        this.compruebaColisionSerpiente();
+        if (colisionManzana()) {
+            manzana.reiniciar();
+            serpiente.addCuerpo();
+            marcador.setPunto();
+        }
+        if (colisionSerpiente() || colisionEscenario()) {
+            marcador.reiniciar();
+            serpiente.reiniciar();
+        }
     }
 
     @Override
     public void paint(Graphics g) {
         super.paint(g);
+        dibujarTablero(g);
+        manzana.paint(g);
+        serpiente.paint(g);
+        marcador.paint(g);
+    }
 
+    public boolean colisionManzana() {
+        return serpiente.getX() == manzana.getX() && serpiente.getY() == manzana.getY();
+    }
+
+    private boolean colisionSerpiente() {
+        for (Cuerpo c : serpiente.getCuerpo()) {
+            if (serpiente.getX() == c.getX() && serpiente.getY() == c.getY()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean colisionEscenario() {
+        return serpiente.getX() < 0 || serpiente.getX() >= TAM_TABLERO || serpiente.getY() < 0 || serpiente.getY() >= TAM_TABLERO;
+    }
+
+    private void dibujarTablero(Graphics g) {
         for (int x = 0; x <= TAM_TABLERO; x += TAM_CELDA) {
             g.drawLine(x, 0, x, TAM_TABLERO);
         }
         for (int y = 0; y <= TAM_TABLERO; y += TAM_CELDA) {
             g.drawLine(0, y, TAM_TABLERO, y);
         }
-
-        manzana.paint(g);
-        serpiente.paint(g);
-        marcador.paint(g);
-
     }
 
-    public void compruebaColisionManzana() {
-        if (serpiente.getX() == manzana.getX() && serpiente.getY() == manzana.getY()) {
-            manzana.reiniciar();
-            serpiente.addCuerpo();
-            marcador.setPunto();
-        }
-    }
-
-    private void compruebaColisionSerpiente() {
-        boolean colision = false;
-        for (Cuerpo c : serpiente.getCuerpo()) {
-            if (serpiente.getX() == c.getX() && serpiente.getY() == c.getY()) {
-                colision = true;
-            }
-        }
-        
-        if (serpiente.getX() < 0 || serpiente.getX() >= TAM_TABLERO || serpiente.getY() < 0 || serpiente.getY() >= TAM_TABLERO) {
-            colision = true;
-        }
-
-        if (colision) {
-            marcador.reiniciar();
-            serpiente.reiniciar();
-        }
-    }
 }
