@@ -15,11 +15,9 @@ public class Marcador {
         Graphics2D g2d = (Graphics2D) g;
         g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
                 RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.setColor(Color.GREEN.darker().darker());
+        g2d.setColor(Color.BLACK);
         g2d.setFont(new Font("Verdana", Font.BOLD, 30));
-        g2d.drawString("Snake ", 580, 50);
-        g2d.drawString("The Wapens ", 585, 80);
-        g2d.setColor(Color.BLACK.brighter().brighter());
+        g2d.drawString("Snake ", 620, 50);
         g2d.drawString("Score:", 620, 180);
         g2d.drawString("Hi-Score:", 620, 300);
         g2d.setFont(new Font("Verdana", Font.BOLD, 50));

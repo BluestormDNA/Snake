@@ -7,16 +7,16 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class Tablero extends JPanel implements Constantes {
-    
+
     private final Serpiente serpiente;
     private final Manzana manzana;
     private final Marcador marcador;
-    
+
     public Tablero() {
         serpiente = new Serpiente();
         manzana = new Manzana();
         marcador = new Marcador();
-        
+
         this.addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -25,7 +25,7 @@ public class Tablero extends JPanel implements Constantes {
         });
         setFocusable(true);
     }
-    
+
     public static void main(String[] args) throws InterruptedException {
         JFrame ventana = new JFrame("Snake clon");
         Tablero tablero = new Tablero();
@@ -34,14 +34,14 @@ public class Tablero extends JPanel implements Constantes {
         ventana.setResizable(false);
         ventana.add(tablero);
         ventana.setVisible(true);
-        
+
         while (true) {
             tablero.actualizar();
             tablero.repaint();
             Thread.sleep(200);
         }
     }
-    
+
     private void actualizar() {
         serpiente.mueve();
         if (colisionManzana()) {
@@ -53,7 +53,7 @@ public class Tablero extends JPanel implements Constantes {
             serpiente.reiniciar();
         }
     }
-    
+
     @Override
     public void paint(Graphics g) {
         super.paint(g);
@@ -62,11 +62,11 @@ public class Tablero extends JPanel implements Constantes {
         serpiente.paint(g);
         marcador.paint(g);
     }
-    
+
     public boolean colisionManzana() {
         return serpiente.getX() == manzana.getX() && serpiente.getY() == manzana.getY();
     }
-    
+
     private boolean colisionSerpiente() {
         for (Cuerpo c : serpiente.getCuerpo()) {
             if (serpiente.getX() == c.getX() && serpiente.getY() == c.getY()) {
@@ -77,18 +77,17 @@ public class Tablero extends JPanel implements Constantes {
         }
         return false;
     }
-    
+
     public boolean colisionEscenario() {
-        return serpiente.getX() < 0 || serpiente.getX() >= TAM_TABLERO || serpiente.getY() < 0 || serpiente.getY() >= TAM_TABLERO;
+        return serpiente.getX() < 0 || serpiente.getX() >= TAM_TABLERO
+                || serpiente.getY() < 0 || serpiente.getY() >= TAM_TABLERO;
     }
-    
+
     private void dibujarTablero(Graphics g) {
-        for (int x = 0; x <= TAM_TABLERO; x += TAM_CELDA) {
-            g.drawLine(x, 0, x, TAM_TABLERO);
-        }
-        for (int y = 0; y <= TAM_TABLERO; y += TAM_CELDA) {
-            g.drawLine(0, y, TAM_TABLERO, y);
+        for (int i = 0; i <= TAM_TABLERO; i += TAM_CELDA) {
+            g.drawLine(i, 0, i, TAM_TABLERO);
+            g.drawLine(0, i, TAM_TABLERO, i);
         }
     }
-    
+
 }
