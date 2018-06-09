@@ -1,2 +1,4 @@
 # Snake
-Simple Java Snake Clone
+A Simple Java Snake Clone on 8KB
+
+
